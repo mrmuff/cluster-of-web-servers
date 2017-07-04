@@ -2,6 +2,7 @@ provider "aws" {
   region = "us-west-1"
 }
 
+/*
 resource "aws_instance" "example" {
   ami = "ami-327f5352"
   instance_type = "t2.micro"
@@ -15,6 +16,13 @@ resource "aws_instance" "example" {
   tags {
     Name = "terraform-example"
   }
+}
+*/
+
+resource "aws_launch_configuration" "example" {
+  image_id = "ami-327f5352"
+  instance_type = "t2.micro"
+  security_groups = ["${aws_security_group.instance.id}"]
 }
 
 resource "aws_security_group" "instance" {
@@ -32,7 +40,8 @@ variable "server_port" {
   description = "Port web server listens on"
   default = 8080
 }
-
+/*
 output "public_ip" {
   value = "${aws_instance.example.public_ip}"
 }
+*/
